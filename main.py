@@ -6,6 +6,7 @@ from enums import Color, Command
 from handlers import (
     add_birthday,
     add_contact,
+    change_birthday,
     change_contact,
     get_upcoming_birthdays,
     show_all,
@@ -65,6 +66,8 @@ def main() -> None:
                     print(show_birthday(args, book))
                 case Command.BIRTHDAYS:
                     print(get_upcoming_birthdays(book))
+                case Command.CHANGE_BIRTHDAY:
+                    print(change_birthday(args, book))
                 case _:
                     print(f"{Color.ERROR.value}Error: Invalid command.")
     except Exception as e:

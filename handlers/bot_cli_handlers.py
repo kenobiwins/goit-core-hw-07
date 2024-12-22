@@ -88,7 +88,6 @@ def change_birthday(args, book: AddressBook) -> str:
     if record is None:
         return f"{Color.ERROR.value}Contact not found."
     record.change_birthday(birthday)
-    # record.
     return f"{Color.SUCCESS.value}Birthday changed."
 
 @handle_input_error
