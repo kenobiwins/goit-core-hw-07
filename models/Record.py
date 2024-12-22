@@ -5,7 +5,14 @@ class Record:
     def __init__(self, name):
         self.name = FieldFactory.create_field(FieldType.NAME, name)
         self.phones = []
+        self.birthday = None
 
+    def add_birthday(self, birthday):
+        self.birthday = FieldFactory.create_field(FieldType.BIRTHDAY, birthday)
+
+    def show_birthday(self):
+        return self.birthday.value if self.birthday else None
+    
     def add_phone(self, phone):
 
         phone = FieldFactory.create_field(FieldType.PHONE, phone)
@@ -33,4 +40,4 @@ class Record:
 
     def __str__(self):
         phones = "; ".join(p.value for p in self.phones)
-        return f"Contact name: {self.name.value}, phones: {phones}"
+        return f"Contact name: {self.name.value}, phones: {phones}, birthday: {self.birthday.value if self.birthday else None}"
