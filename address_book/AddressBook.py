@@ -1,6 +1,7 @@
 from collections import UserDict
 
 from memento import Memento
+from models import Record
 from utils import BirthdayHelper
 
 
@@ -19,25 +20,25 @@ class AddressBook(UserDict):
             else "The address book is empty."
         )
 
-    def add_record(self, record):
+    def add_record(self, record: Record)->None:
         self.data[record.name.value] = record
 
-    def find(self, name):
+    def find(self, name:str)->Record:
         return self.data.get(name)
 
-    def delete(self, name):
+    def delete(self, name:str)->None:
         if name in self.data:
             del self.data[name]
         else:
             raise ValueError("Contact not found")
 
-    def save(self):
+    def save(self) -> Memento:
         return Memento(self.data)
 
-    def restore(self, memento):
+    def restore(self, memento: Memento) -> None:
         self.data = memento.get_state()
 
-    def get_all_contacts_as_list(self):
+    def get_all_contacts_as_list(self) -> list[dict]:
         contacts_list = []
         for record in self.data.values():
             contact_dict = {
@@ -48,5 +49,5 @@ class AddressBook(UserDict):
             contacts_list.append(contact_dict)
         return contacts_list
 
-    def get_upcoming_birthdays(self):
+    def get_upcoming_birthdays(self) -> list[dict]:
         return BirthdayHelper().get_upcoming_birthdays(self.get_all_contacts_as_list())

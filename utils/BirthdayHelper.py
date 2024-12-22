@@ -1,18 +1,21 @@
 from datetime import date, datetime, timedelta
+from typing import Dict, List, Optional
 
 
 class BirthdayHelper:
     DATE_FORMAT = "%d.%m.%Y"
 
     @staticmethod
-    def string_to_date(date_string, format=DATE_FORMAT):
+    def string_to_date(date_string:str, format=DATE_FORMAT)-> date:
         return datetime.strptime(date_string, format).date()
 
     @staticmethod
-    def date_to_string(date, format=DATE_FORMAT):
+    def date_to_string(date: date, format=DATE_FORMAT)-> str:
         return date.strftime(format)
 
-    def prepare_user_list(self, user_data):
+    def prepare_user_list(
+        self, user_data: List[Dict[str, Optional[str]]]
+    ) -> List[Dict[str, date]]:
         prepared_list = []
 
         for user in user_data:
@@ -29,18 +32,21 @@ class BirthdayHelper:
         return prepared_list
 
     @staticmethod
-    def find_next_weekday(start_date, weekday):
+    def find_next_weekday(start_date: date, weekday: int)-> date:
         days_ahead = weekday - start_date.weekday()
         if days_ahead <= 0:
             days_ahead += 7
         return start_date + timedelta(days=days_ahead)
 
-    def adjust_for_weekend(self, birthday):
+    def adjust_for_weekend(self, birthday: date)-> date:
         if birthday.weekday() >= 5:
             return self.find_next_weekday(birthday, 0)
         return birthday
 
-    def get_upcoming_birthdays(self, users, days=7):
+    def get_upcoming_birthdays(
+        self, users: List[Dict[str, Optional[str]]], days: int = 7
+    ) -> List[Dict[str, str]]:
+
         upcoming_birthdays = []
         today = date.today()
 

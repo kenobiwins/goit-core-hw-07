@@ -5,7 +5,7 @@ from .FieldType import FieldType
 
 class FieldFactory:
     @staticmethod
-    def create_field(field_type, value):
+    def create_field(field_type: FieldType, value: str) -> FieldType:
         match field_type:
             case FieldType.NAME:
                 return Name(value)

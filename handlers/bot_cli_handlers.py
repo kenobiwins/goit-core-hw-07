@@ -1,4 +1,4 @@
-from address_book import AddressBookIterator
+from address_book import AddressBook, AddressBookIterator
 from commands import AddBirthdayCommand, AddRecordCommand, FindRecordCommand
 from decorators import handle_input_error
 from enums import COMMAND_DESCRIPTIONS, Color
@@ -38,7 +38,7 @@ def change_contact(args: list[str], book) -> str:
 
 
 @handle_input_error
-def show_phone(args: list[str], book) -> str:
+def show_phone(args: list[str], book: AddressBook) -> str:
     (name,) = args
     find_command = FindRecordCommand(book, name)
     record = find_command.execute()
@@ -50,7 +50,7 @@ def show_phone(args: list[str], book) -> str:
 
 
 @handle_input_error
-def show_all(book) -> str:
+def show_all(book: AddressBook) -> str:
     result = [f"{Color.HIGHLIGHT.value}All Contacts:"]
 
     if not book.data:
@@ -72,23 +72,34 @@ def show_help() -> str:
 
 
 @handle_input_error
-def add_birthday(args, book):
+def add_birthday(args, book: AddressBook)   -> str:
     if len(args) < 2:
         raise IndexError
     name, birthday, *_ = args
     AddBirthdayCommand(book, name, birthday).execute()
     return f"{Color.SUCCESS.value}Birthday added."
 
+@handle_input_error
+def change_birthday(args, book: AddressBook) -> str:
+    if len(args) < 2:
+        raise IndexError
+    name, birthday, *_ = args
+    record = book.find(name)
+    if record is None:
+        return f"{Color.ERROR.value}Contact not found."
+    record.change_birthday(birthday)
+    # record.
+    return f"{Color.SUCCESS.value}Birthday changed."
 
 @handle_input_error
-def show_birthday(args, book):
+def show_birthday(args, book: AddressBook)  -> str:
     name = args[0]
     record = book.find(name)
     return f"{Color.INFO.value}{name}'s birthday: {record.birthday}"
 
 
 @handle_input_error
-def get_upcoming_birthdays(book):
+def get_upcoming_birthdays(book: AddressBook):
     birthdays = book.get_upcoming_birthdays()
     if not birthdays:
         return f"{Color.INFO.value}No upcoming birthdays found."

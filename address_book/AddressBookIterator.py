@@ -1,5 +1,9 @@
+from .AddressBook import AddressBook
+
+
 class AddressBookIterator:
-    def __init__(self, address_book):
+
+    def __init__(self, address_book: AddressBook):
         self._records = list(address_book.data.values())
         self._index = 0
 

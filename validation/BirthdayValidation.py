@@ -7,7 +7,7 @@ from .ValidationStrategy import ValidationStrategy
 
 
 class BirthdayValidation(ValidationStrategy):
-    def validate(self, value):
+    def validate(self, value: str) -> str:
         regex = r"^[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}$"
         if not value.strip():
             raise ValueError("Birthday couldn't be empty")
