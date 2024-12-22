@@ -11,8 +11,8 @@ class Command(Enum):
     EXIT = "exit"
     CLOSE = "close"
     HELP = "help"
-    ADD_BIRTHDAY = "add_birthday"
-    SHOW_BIRTHDAY = "show_birthday"
+    ADD_BIRTHDAY = "add-birthday"
+    SHOW_BIRTHDAY = "show-birthday"
     BIRTHDAYS = "birthdays"
 
 COMMAND_DESCRIPTIONS: Dict[Command, str] = {
@@ -24,7 +24,7 @@ COMMAND_DESCRIPTIONS: Dict[Command, str] = {
     Command.EXIT: "Exit the assistant.",
     Command.CLOSE: "Exit the assistant.",
     Command.HELP: "Show all available commands.",
-    Command.ADD_BIRTHDAY: "Add a birthday to a contact. Usage: add_birthday <name> <birthday> (format: DD.MM.YYYY)", 
-    Command.SHOW_BIRTHDAY: "Show the birthday of a contact. Usage: show_birthday <name>",
+    Command.ADD_BIRTHDAY: "Add a birthday to a contact. Usage: add-birthday <name> <birthday> (format: DD.MM.YYYY)", 
+    Command.SHOW_BIRTHDAY: "Show the birthday of a contact. Usage: show-birthday <name>",
     Command.BIRTHDAYS: "Show all upcoming birthdays."
 }
