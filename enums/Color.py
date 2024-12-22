@@ -1,5 +1,7 @@
 from enum import Enum
+
 from colorama import Fore
+
 
 class Color(Enum):
     SUCCESS = Fore.GREEN

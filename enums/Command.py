@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import Dict
 
+
 class Command(Enum):
     ADD = "add"
     CHANGE = "change"

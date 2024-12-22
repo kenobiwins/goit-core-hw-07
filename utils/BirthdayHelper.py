@@ -1,4 +1,4 @@
-from datetime import timedelta, datetime, date
+from datetime import date, datetime, timedelta
 
 
 class BirthdayHelper:

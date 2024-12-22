@@ -1,6 +1,8 @@
 from functools import wraps
-from typing import Callable, Any, List, Dict
+from typing import Any, Callable, Dict, List
+
 from enums import Color
+
 
 def handle_input_error(func: Callable[..., str]) -> Callable[..., str]:
     @wraps(func)

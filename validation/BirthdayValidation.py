@@ -2,6 +2,7 @@ import re
 from datetime import datetime
 
 from utils import BirthdayHelper
+
 from .ValidationStrategy import ValidationStrategy
 
 

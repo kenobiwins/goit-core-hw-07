@@ -1,18 +1,18 @@
 from typing import Tuple
 
-from enums import Color, Command
+from address_book import AddressBook
 from decorators import command_error_handler
+from enums import Color, Command
 from handlers import (
+    add_birthday,
     add_contact,
     change_contact,
-    show_phone,
-    show_all,
-    show_help,
-    add_birthday,
-    show_birthday,
     get_upcoming_birthdays,
+    show_all,
+    show_birthday,
+    show_help,
+    show_phone,
 )
-from address_book import AddressBook
 
 
 def parse_input(user_input: str) -> Tuple[str, list[str]]:

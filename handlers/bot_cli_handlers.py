@@ -1,11 +1,8 @@
-from enums import Color, COMMAND_DESCRIPTIONS
-from models import Record
-from commands import AddRecordCommand, FindRecordCommand, AddBirthdayCommand
 from address_book import AddressBookIterator
-
-from decorators import (
-    handle_input_error,
-)
+from commands import AddBirthdayCommand, AddRecordCommand, FindRecordCommand
+from decorators import handle_input_error
+from enums import COMMAND_DESCRIPTIONS, Color
+from models import Record
 
 
 @handle_input_error

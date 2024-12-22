@@ -1,4 +1,4 @@
-from models import Name, Phone, Birthday
+from models import Birthday, Name, Phone
 
 from .FieldType import FieldType
 

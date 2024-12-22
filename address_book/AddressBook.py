@@ -1,6 +1,7 @@
 from collections import UserDict
-from utils import BirthdayHelper
+
 from memento import Memento
+from utils import BirthdayHelper
 
 
 class AddressBook(UserDict):
