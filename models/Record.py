@@ -8,7 +8,14 @@ class Record:
         self.birthday = None
 
     def add_birthday(self, birthday):
+        if self.birthday:
+            raise ValueError("Birthday already exists")
         self.birthday = FieldFactory.create_field(FieldType.BIRTHDAY, birthday)
+
+    def change_birthday(self, new_birthday):
+        if not self.birthday:
+            raise ValueError("No birthday exists to change")
+        self.birthday = FieldFactory.create_field(FieldType.BIRTHDAY, new_birthday)
 
     def show_birthday(self):
         return self.birthday.value if self.birthday else None
