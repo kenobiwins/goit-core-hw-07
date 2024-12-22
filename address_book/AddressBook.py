@@ -1,5 +1,5 @@
 from collections import UserDict
-
+from utils import BirthdayHelper
 from memento import Memento
 
 
@@ -35,3 +35,17 @@ class AddressBook(UserDict):
 
     def restore(self, memento):
         self.data = memento.get_state()
+
+    def get_all_contacts_as_list(self):
+        contacts_list = []
+        for record in self.data.values():
+            contact_dict = {
+                "name": record.name.value,
+                "phones": [phone.value for phone in record.phones],
+                "birthday": record.birthday.value,
+            }
+            contacts_list.append(contact_dict)
+        return contacts_list
+
+    def get_upcoming_birthdays(self):
+        return BirthdayHelper().get_upcoming_birthdays(self.get_all_contacts_as_list())
