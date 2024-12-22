@@ -1,58 +1,74 @@
+from typing import Tuple
+
+from enums import Color, Command
+from decorators import command_error_handler
+from handlers import (
+    add_contact,
+    change_contact,
+    show_phone,
+    show_all,
+    show_help,
+    add_birthday,
+    show_birthday,
+    get_upcoming_birthdays,
+)
 from address_book import AddressBook
-from commands import AddRecordCommand, DeleteRecordCommand, FindRecordCommand
-from models import Record
 
 
-def main():
-    address_book = AddressBook()
-    print(address_book)
-    john_record = Record("John")
-    john_record.add_phone("1234567890")
-    john_record.add_phone("5555555555")
+def parse_input(user_input: str) -> Tuple[str, list[str]]:
+    cmd, *args = user_input.split()
+    cmd = cmd.strip().lower()
+    return cmd, *args
 
-    add_command = AddRecordCommand(address_book, john_record)
-    add_command.execute()
 
-    jane_record = Record("Jane")
-    jane_record.add_phone("9876543210")
+@command_error_handler
+def parse_command(command: str) -> Command:
+    return Command(command)
 
-    add_command = AddRecordCommand(address_book, jane_record)
-    add_command.execute()
 
-    print("\nCurrent Address Book:")
-    print(address_book)
+def main() -> None:
+    print(f"{Color.TITLE.value}Welcome to the assistant bot!")
+    # contacts = {}
+    book = AddressBook()
+    # print(book)
+    try:
+        while True:
+            user_input = (
+                input(f"{Color.DEFAULT.value}Enter a command: ").strip().lower()
+            )
+            command, *args = parse_input(user_input)
 
-    find_command = FindRecordCommand(address_book, "John")
-    found_record = find_command.execute()
+            parsed_command = parse_command(command)
 
-    if found_record:
-        print("\nFound Record:")
-        print(found_record)
+            if parsed_command is None:
+                continue
 
-        print("\nEditing a phone number...")
-        found_record.edit_phone("1234567890", "1112223333")
-        print(found_record)
-
-    delete_command = DeleteRecordCommand(address_book, "Jane")
-    delete_command.execute()
-
-    print("\nAddress Book after deletion:")
-    print(address_book)
-
-    print("\nSaving Address Book state...")
-    saved_state = address_book.save()
-
-    delete_command = DeleteRecordCommand(address_book, "John")
-    delete_command.execute()
-
-    print("\nAddress Book after deleting John:")
-    print(address_book)
-
-    print("\nRestoring Address Book state...")
-    address_book.restore(saved_state)
-
-    print("\nRestored Address Book:")
-    print(address_book)
+            match parsed_command:
+                case Command.EXIT | Command.CLOSE:
+                    print(f"{Color.TITLE.value}Good bye!")
+                    break
+                case Command.HELLO:
+                    print(f"{Color.TITLE.value}How can I help you?")
+                case Command.ADD:
+                    print(add_contact(args, book))
+                case Command.CHANGE:
+                    print(change_contact(args, book))
+                case Command.PHONE:
+                    print(show_phone(args, book))
+                case Command.ALL:
+                    print(show_all(book))
+                case Command.HELP:
+                    print(show_help())
+                case Command.ADD_BIRTHDAY:
+                    print(add_birthday(args, book))
+                case Command.SHOW_BIRTHDAY:
+                    print(show_birthday(args, book))
+                case Command.BIRTHDAYS:
+                    print(get_upcoming_birthdays(book))
+                case _:
+                    print(f"{Color.ERROR.value}Error: Invalid command.")
+    except Exception as e:
+        print(f"{Color.ERROR.value}Exeption: {e}")
 
 
 if __name__ == "__main__":
