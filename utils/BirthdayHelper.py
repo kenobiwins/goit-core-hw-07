@@ -53,7 +53,7 @@ class BirthdayHelper:
         prepared_users = self.prepare_user_list(users)
 
         for user in prepared_users:
-            birthday = user.get("birthday")
+            birthday = user.get("birthday",None)
             birthday_this_year = birthday.replace(year=today.year)
 
             if birthday_this_year < today:

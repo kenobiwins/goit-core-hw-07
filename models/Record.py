@@ -29,6 +29,9 @@ class Record:
         return next(
             (phone for phone in self.phones if phone.value == phone_number), None
         )
+    
+    def show_phones(self)->list[str]:
+        return [phone.value for phone in self.phones]
 
     def edit_phone(self, old_phone:str, new_phone:str)->None:
         phone = self.find_phone(old_phone)

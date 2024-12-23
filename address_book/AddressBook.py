@@ -38,13 +38,16 @@ class AddressBook(UserDict):
     def restore(self, memento: Memento) -> None:
         self.data = memento.get_state()
 
+
     def get_all_contacts_as_list(self) -> list[dict]:
         contacts_list = []
         for record in self.data.values():
             contact_dict = {
                 "name": record.name.value,
                 "phones": [phone.value for phone in record.phones],
-                "birthday": record.birthday.value,
+                "birthday": (
+                    record.birthday.value if record.birthday else None
+                ),
             }
             contacts_list.append(contact_dict)
         return contacts_list

@@ -39,15 +39,24 @@ def change_contact(args: list[str], book) -> str:
 
 @handle_input_error
 def show_phone(args: list[str], book: AddressBook) -> str:
+    result = []
+
     (name,) = args
     find_command = FindRecordCommand(book, name)
     record = find_command.execute()
 
     if record is None:
         return f"{Color.ERROR.value}Contact not found."
-    else:
-        return f"{Color.INFO.value}{record}"
 
+    phones = record.show_phones()  
+    if phones:
+        result.append(f"{Color.INFO.value}Phone Numbers:")
+        for phone in phones:
+            result.append(f"📱 {phone}")
+    else:
+        result.append(f"{Color.WARNING.value}No phone numbers available.")
+
+    return "\n".join(result)
 
 @handle_input_error
 def show_all(book: AddressBook) -> str:
@@ -100,10 +109,16 @@ def show_birthday(args, book: AddressBook)  -> str:
 @handle_input_error
 def get_upcoming_birthdays(book: AddressBook):
     birthdays = book.get_upcoming_birthdays()
+
     if not birthdays:
         return f"{Color.INFO.value}No upcoming birthdays found."
 
     result = f"{Color.HIGHLIGHT.value}Upcoming Birthdays:\n"
     for birthday in birthdays:
-        result += f"{Color.INFO.value}🎂 {birthday['name']}: {birthday['congratulation_date']}\n"
+        if birthday["congratulation_date"]: 
+            result += f"{Color.INFO.value}🎂 {birthday['name']}: {birthday['congratulation_date']}\n"
+        else:  
+            result += (
+                f"{Color.INFO.value}🎂 {birthday['name']}: No birthday date available\n"
+            )
     return result.strip()
